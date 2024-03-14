@@ -1,6 +1,28 @@
 import { MdAdd, MdClose } from "react-icons/md";
+import { useState } from "react";
 
-const AddModal = () => {
+const AddModal = ({ onActivityAdded }) => {
+  const [activity, setActivities] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("/api/activity/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        activity: activity
+      }),
+    });
+
+    if (response.ok) {
+      console.log("Activity added successfully");
+      onActivityAdded()
+    } else {
+      console.error("Failed to add activity");
+    }
+  };
   return (
     <>
       <button
@@ -16,7 +38,7 @@ const AddModal = () => {
               <MdClose />
             </button>
           </form>
-          <form className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <p className="text-xl font-bold">Tambah Aktivitas</p>
               <label className="form-control">
                 <input
@@ -25,9 +47,11 @@ const AddModal = () => {
                   className="input input-sm input-bordered w-full focus:outline-none"
                   maxLength={64}
                   required
+                  value={activity}
+                onChange={(e) => setActivities(e.target.value)}
                 />
               </label>
-              <button className="btn btn-sm btn-success text-white hover:btn-success hover:text-white">
+              <button className="btn btn-sm btn-success text-white hover:btn-success hover:text-white" type="submit">
                 Tambah
               </button>
           </form>
