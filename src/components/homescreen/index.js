@@ -19,6 +19,7 @@ const Homescreen = () => {
   const handleActivity = () => {
     fetchActivities();
   };
+
   return (
     <>
       <div className="flex flex-col min-h-screen bg-base-100 text-neutral justify-center items-center">
@@ -51,8 +52,11 @@ const Homescreen = () => {
                       </th>
                       <td>{item.activity}</td>
                       <td className="flex flex-col sm:flex-row gap-2 justify-center items-center h-full">
-                        <EditModal />
-                        <DeleteModal activity={item} onActivityDeleted={handleActivity}/>
+                        {/* <EditModal activity={item.activity} onActivityEdit={handleActivity}/>  */}
+                        <DeleteModal
+                          activity={item.id}
+                          onActivityDeleted={handleActivity}
+                        />
                       </td>
                     </tr>
                   ))}

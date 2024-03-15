@@ -3,7 +3,7 @@ import { MdClose, MdDelete } from "react-icons/md";
 const DeleteModal = ({ activity, onActivityDeleted }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch(`/api/activity/delete/${activity.id}`, {
+    const response = await fetch(`/api/activity/delete/${activity}`, {
       method: "DELETE",
     });
     if (response.ok) {
